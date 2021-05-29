@@ -24,12 +24,10 @@ namespace Core.Tests
             const int minValue = 0;
             const int maxValue = 1;
             var scrambler = new NumberScrambler(minValue, maxValue);
-            var newValue = scrambler.Scramble(currentValue);
-            Assert.NotEqual(currentValue, newValue);
-            newValue = scrambler.Scramble(newValue);
-            Assert.Equal(currentValue, newValue);
+            currentValue = scrambler.Scramble(currentValue);
+            Assert.Equal(0, currentValue);
+            currentValue = scrambler.Scramble(currentValue);
+            Assert.Equal(1, currentValue);
         }
     }
-
-
 }
