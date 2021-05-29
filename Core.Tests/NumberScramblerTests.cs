@@ -1,30 +1,9 @@
 using System;
+using Scrambler.Core.Scramblers;
 using Xunit;
 
 namespace Core.Tests
 {
-
-    public interface IScrambler<T>
-    {
-        T Scramble(T value);
-    }
-
-    public class NumberScrambler : IScrambler<Int64>
-    {
-        private readonly long minValue;
-        private readonly long maxValue;
-
-        public NumberScrambler(Int64 MinValue, Int64 MaxValue)
-        {
-            minValue = MinValue;
-            maxValue = MaxValue;
-        }
-        public Int64 Scramble(Int64 value)
-        {
-            return value + 1;
-        }
-    }
-
     public class NumberScramblerTests
     {
         [Fact]
@@ -47,7 +26,7 @@ namespace Core.Tests
             var scrambler = new NumberScrambler(minValue, maxValue);
             var newValue = scrambler.Scramble(currentValue);
             Assert.NotEqual(currentValue, newValue);
-            newValue = scrambler.Scramble(currentValue);
+            newValue = scrambler.Scramble(newValue);
             Assert.Equal(currentValue, newValue);
         }
     }
