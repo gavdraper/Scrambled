@@ -17,6 +17,7 @@ namespace Scrambler.Core.Scramblers
         }
         public DateTime Scramble(DateTime value)
         {
+            //Todo Range Setup To Constructor
             value = value.Date;
             var totalDays = (int)(maxValue - minValue).TotalDays;
             var range =

@@ -7,22 +7,17 @@ namespace Scrambler.Core.Scramblers
 
     public class NumberScrambler : IScrambler<int>
     {
-        private readonly int minValue;
-        private readonly int maxValue;
+        private IEnumerable<int> range;
 
-        public NumberScrambler(int MinValue, int MaxValue)
+        public NumberScrambler(int minValue, int maxValue)
         {
-            minValue = MinValue;
-            maxValue = MaxValue;
+            range = Enumerable.Range(minValue, maxValue + 1);
         }
         public int Scramble(int value)
         {
-            var range =
-                Enumerable.Range(minValue, maxValue + 1)
-                .Where(i => i != value);
             var rand = new System.Random();
-            int index = rand.Next(0, range.Count() - 1);
-            return range.ElementAt(index);
+            int index = rand.Next(0, range.Count() - 2);
+            return range.Where(x => x != value).ElementAt(index);
         }
     }
 }
