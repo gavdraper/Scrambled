@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Xunit;
+using Scrambler.Core.Scramblers;
+
 
 namespace Core.E2ETests
 {
@@ -10,6 +12,17 @@ namespace Core.E2ETests
         [Fact]
         public void CanMaskDataBasedOnMaskSet()
         {
+            /*
+                Doesn't Feel Right that ConectionString and CollectionName
+                are not needed for InMemory Dictionary Provider. This provider
+                is really just for testing though so perhaps will keep as is...
+            */
+
+
+            //Todo need some sort of ITterator to aggregate multiple types of IScrambler
+            List<IScrambler<string>> stringScramblers = new List<IScrambler<string>>();
+            stringScramblers.Add(new StringDictionaryScrambler(new string[] { "Hello", "World" }));
+
             var myData = new Dictionary<string, string>(){
                 {"FieldOne","Hello"},
                 {"FieldTwo","World"}
@@ -48,6 +61,7 @@ namespace Core.E2ETests
 
         public InMemoryDictionaryPersistor(Dictionary<string, string> data)
         {
+
             this.data = data;
         }
     }
