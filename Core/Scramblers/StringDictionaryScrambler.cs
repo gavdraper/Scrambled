@@ -13,11 +13,9 @@ namespace Scrambler.Core.Scramblers
         }
         public string Scramble(string value)
         {
-            //Todo Move Range Setup To Constructor
-            var range = words.Where(i => i != value);
             var rand = new System.Random();
-            int index = rand.Next(0, range.Count() - 1);
-            return range.ElementAt(index);
+            int index = rand.Next(0, words.Count() - 2);
+            return words.Where(i => i != value).ElementAt(index);
         }
     }
 }
