@@ -5,13 +5,12 @@ namespace Scramblers.Core.MaskSet
     public class MaskedCollection : IMaskedCollection
     {
         public string CollectionName { get; set; }
-        public List<IMaskedProperty> MaskedProperties { get; set; }
+        public IEnumerable<IMaskedProperty> MaskedProperties { get; set; }
 
-        public MaskedCollection(string collectionName, List<IMaskedProperty> properties)
+        public MaskedCollection(string collectionName, IEnumerable<IMaskedProperty> properties)
         {
             CollectionName = collectionName;
             MaskedProperties = properties;
         }
-
     }
 }

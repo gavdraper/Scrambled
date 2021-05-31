@@ -9,45 +9,57 @@ namespace Core.E2ETests
 {
     public class MaskingTests
     {
-        // Will fail, currently used to flesh out what the API surface could feel like to use
         [Fact]
         public void CanMaskDataBasedOnMaskSet()
         {
-            /*
-                Doesn't Feel Right that ConectionString and CollectionName
-                are not needed for InMemory Dictionary Provider. This provider
-                is really just for testing though so perhaps will keep as is...
+            var data = createSmallDataSet();
+            /*  
+                In real world maskSet will be loaded from JSON config files,
+                created from a GUI 
             */
-            var myData = new Dictionary<string, string>(){
+            var maskSet = createSmallMaskSet();
+            IMaskPersistor maskPersister = new InMemoryDictionaryPersistor(data);
+            IMaskSetRunner maskSetRunner = new MaskSetRunner(maskSet, maskPersister);
+            maskSetRunner.Run();
+            Assert.Equal("World", data["FieldOne"]);
+            Assert.Equal("Hello", data["FieldTwo"]);
+        }
+
+        private IMaskSet createSmallMaskSet()
+        {
+            var maskedPropertyDefinitions = createTwoPropertyMasks();
+            var maskedCollections = createEmptyMaskedCollection(maskedPropertyDefinitions);
+            return new MaskSet("local:\\Dictionary", maskedCollections);
+        }
+
+        private Dictionary<string, object> createSmallDataSet()
+        {
+            return new Dictionary<string, object>(){
                 {"FieldOne","Hello"},
                 {"FieldTwo","World"}
             };
+        }
 
-            var maskedPropertyDefinitions = new List<IMaskedProperty>(){
+        private IEnumerable<IMaskedProperty> createTwoPropertyMasks()
+        {
+            return new IMaskedProperty[]{
                 new MaskedProperty(){
                     PropertyName = "FieldOne",
-                    MaskType = "StringDictionary"
+                    MaskType = "StringDictionary",
                 },
                 new MaskedProperty(){
                     PropertyName = "FieldTwo",
                     MaskType = "StringDictionary"
                 },
             };
-
-            var maskedCollections = new List<IMaskedCollection>(){
-                    new MaskedCollection("main",  maskedPropertyDefinitions)
-            };
-
-            var maskSet = new MaskSet("local:\\Dictionary", maskedCollections);
-            IMaskPersistor maskPersister = new InMemoryDictionaryPersistor(myData);
-            IMaskSetRunner maskSetRunner = new MaskSetRunner(maskSet, maskPersister);
-            maskSetRunner.Run();
-
-            Assert.Equal("World", myData["FieldOne"]);
-            Assert.Equal("Hello", myData["FieldTwo"]);
         }
+
+        private IMaskedCollection[] createEmptyMaskedCollection(IEnumerable<IMaskedProperty> maskedPropertyDefinitions)
+        {
+            return new IMaskedCollection[]{
+                new MaskedCollection("main",  maskedPropertyDefinitions)
+            };
+        }
+
     }
-
-
-
 }

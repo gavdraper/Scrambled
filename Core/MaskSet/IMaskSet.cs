@@ -5,6 +5,6 @@ namespace Scramblers.Core.MaskSet
     public interface IMaskSet
     {
         string ConnectionString { get; }
-        List<IMaskedCollection> MaskedCollections { get; set; }
+        IEnumerable<IMaskedCollection> MaskedCollections { get; set; }
     }
 }

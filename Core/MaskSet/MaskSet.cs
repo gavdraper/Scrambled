@@ -5,9 +5,9 @@ namespace Scramblers.Core.MaskSet
     public class MaskSet : IMaskSet
     {
         public string ConnectionString { get; }
-        public List<IMaskedCollection> MaskedCollections { get; set; }
+        public IEnumerable<IMaskedCollection> MaskedCollections { get; set; }
 
-        public MaskSet(string connectionString, List<IMaskedCollection> collections)
+        public MaskSet(string connectionString, IEnumerable<IMaskedCollection> collections)
         {
             ConnectionString = connectionString;
             MaskedCollections = collections;

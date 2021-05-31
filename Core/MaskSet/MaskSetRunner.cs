@@ -1,14 +1,15 @@
 using Scrambled.Core.Persistance;
 using Scrambler.Core.Scramblers;
+using System.Linq;
 
 namespace Scramblers.Core.MaskSet
 {
     public class MaskSetRunner : IMaskSetRunner
     {
-        private readonly MaskSet maskSet;
+        private readonly IMaskSet maskSet;
         private readonly IMaskPersistor maskSetPersistor;
 
-        public MaskSetRunner(MaskSet maskSet, IMaskPersistor maskSetPersistor)
+        public MaskSetRunner(IMaskSet maskSet, IMaskPersistor maskSetPersistor)
         {
             this.maskSet = maskSet;
             this.maskSetPersistor = maskSetPersistor;
@@ -17,18 +18,28 @@ namespace Scramblers.Core.MaskSet
         {
             foreach (var m in maskSet.MaskedCollections)
             {
-                foreach (var p in m.MaskedProperties)
-                {
-                    //TODO Switch To Enum
-                    //Switch Creation Out TO Factory                
-                    if (p.MaskType == "StringDictionary")
-                    {
-                        var scrambler = new StringDictionaryScrambler(new[] { "Hello", "World" });
-                        var pValue = (string)maskSetPersistor.GetProperty(p.PropertyName);
-                        pValue = scrambler.Scramble(pValue);
-                        maskSetPersistor.SetProperty(p.PropertyName, pValue);
-                    }
-                }
+                maskCollection(m);
+            }
+        }
+
+        private void maskCollection(IMaskedCollection collection)
+        {
+            foreach (var p in collection.MaskedProperties)
+            {
+                scrambleProperty(p);
+            }
+        }
+
+        private void scrambleProperty(IMaskedProperty maskedProperty)
+        {
+            //TODO Switch To Enum
+            //Switch Creation Out TO Factory                
+            if (maskedProperty.MaskType == "StringDictionary")
+            {
+                var scrambler = new StringDictionaryScrambler(new[] { "Hello", "World" });
+                var pValue = (string)maskSetPersistor.GetProperty(maskedProperty.PropertyName);
+                pValue = scrambler.Scramble(pValue);
+                maskSetPersistor.SetProperty(maskedProperty.PropertyName, pValue);
             }
         }
     }
