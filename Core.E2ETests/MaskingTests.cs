@@ -55,7 +55,11 @@ namespace Core.E2ETests
                 },
                 new MaskedProperty(){
                     PropertyName = "FieldThree",
-                    MaskType = "Number"
+                    MaskType = "Number",
+                    Params = new Dictionary<string,object>{
+                        {"MinValue",1},
+                        {"MaxValue",10}
+                    }
                 },
             };
         }

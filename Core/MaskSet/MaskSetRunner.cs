@@ -33,9 +33,8 @@ namespace Scramblers.Core.MaskSet
 
         private void scrambleProperty(IMaskedProperty maskedProperty)
         {
-            //TODO Switch To Enum
+            //TODO Switch MaskType To Enum
             //Switch Creation Out TO Factory   
-            //Load Type Specific Parameters From MaskParams Dictionary on Property             
             if (maskedProperty.MaskType == "StringDictionary")
             {
                 var scrambler = new StringDictionaryScrambler(new[] { "Hello", "World" });
@@ -45,10 +44,12 @@ namespace Scramblers.Core.MaskSet
             }
             else if (maskedProperty.MaskType == "Number")
             {
-                var scrambler = new NumberScrambler(1, 100);
-                var pValue = (int)maskSetPersistor.GetProperty(maskedProperty.PropertyName);
-                pValue = scrambler.Scramble(pValue);
-                maskSetPersistor.SetProperty(maskedProperty.PropertyName, pValue);
+                var scrambler = new NumberScrambler(
+                    (int)maskedProperty.Params["MinValue"],
+                    (int)maskedProperty.Params["MaxValue"]);
+                var value = (int)maskSetPersistor.GetProperty(maskedProperty.PropertyName);
+                value = scrambler.Scramble(value);
+                maskSetPersistor.SetProperty(maskedProperty.PropertyName, value);
             }
         }
     }
