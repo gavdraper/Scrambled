@@ -23,6 +23,7 @@ namespace Core.E2ETests
             maskSetRunner.Run();
             Assert.Equal("World", data["FieldOne"]);
             Assert.Equal("Hello", data["FieldTwo"]);
+            Assert.NotEqual(1, data["FieldThree"]);
         }
 
         private IMaskSet createSmallMaskSet()
@@ -36,7 +37,8 @@ namespace Core.E2ETests
         {
             return new Dictionary<string, object>(){
                 {"FieldOne","Hello"},
-                {"FieldTwo","World"}
+                {"FieldTwo","World"},
+                {"FieldThree",1}
             };
         }
 
@@ -50,6 +52,10 @@ namespace Core.E2ETests
                 new MaskedProperty(){
                     PropertyName = "FieldTwo",
                     MaskType = "StringDictionary"
+                },
+                new MaskedProperty(){
+                    PropertyName = "FieldThree",
+                    MaskType = "Number"
                 },
             };
         }
