@@ -1,5 +1,6 @@
 # 🍳 Scrambled
 [![.NET](https://github.com/gavdraper/Scrambled/actions/workflows/dotnet.yml/badge.svg)](https://github.com/gavdraper/Scrambled/actions/workflows/dotnet.yml)
+[![CodeQL](https://github.com/gavdraper/Scrambled/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/gavdraper/Scrambled/actions/workflows/codeql-analysis.yml)
 
 Playing with the idea of an Open Source data compliance masking tool.
 
