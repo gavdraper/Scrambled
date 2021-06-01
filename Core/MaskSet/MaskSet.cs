@@ -2,12 +2,12 @@ using System.Collections.Generic;
 
 namespace Scramblers.Core.MaskSet
 {
-    public class MaskSet : IMaskSet
+    public class MaskSet
     {
         public string ConnectionString { get; }
-        public IEnumerable<IMaskedCollection> MaskedCollections { get; set; }
+        public IEnumerable<MaskedCollection> MaskedCollections { get; set; }
 
-        public MaskSet(string connectionString, IEnumerable<IMaskedCollection> collections)
+        public MaskSet(string connectionString, IEnumerable<MaskedCollection> collections)
         {
             ConnectionString = connectionString;
             MaskedCollections = collections;

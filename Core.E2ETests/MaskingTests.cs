@@ -19,14 +19,19 @@ namespace Core.E2ETests
             */
             var maskSet = createSmallMaskSet();
             IMaskPersistor maskPersister = new InMemoryDictionaryPersistor(data);
-            IMaskSetRunner maskSetRunner = new MaskSetRunner(maskSet, maskPersister);
+            IMaskSetRunner maskSetRunner = new MaskSetRunner(maskSet, maskPersister, getScramblerFactories());
             maskSetRunner.Run();
             Assert.Equal("World", data["FieldOne"]);
             Assert.Equal("Hello", data["FieldTwo"]);
             Assert.NotEqual(1, data["FieldThree"]);
         }
 
-        private IMaskSet createSmallMaskSet()
+        private IEnumerable<IScramblerFactory> getScramblerFactories()
+        {
+            return new List<IScramblerFactory>();
+        }
+
+        private MaskSet createSmallMaskSet()
         {
             var maskedPropertyDefinitions = createTwoPropertyMasks();
             var maskedCollections = createEmptyMaskedCollection(maskedPropertyDefinitions);
@@ -42,9 +47,9 @@ namespace Core.E2ETests
             };
         }
 
-        private IEnumerable<IMaskedProperty> createTwoPropertyMasks()
+        private IEnumerable<MaskedProperty> createTwoPropertyMasks()
         {
-            return new IMaskedProperty[]{
+            return new MaskedProperty[]{
                 new MaskedProperty(){
                     PropertyName = "FieldOne",
                     MaskType = "StringDictionary",
@@ -64,9 +69,9 @@ namespace Core.E2ETests
             };
         }
 
-        private IMaskedCollection[] createEmptyMaskedCollection(IEnumerable<IMaskedProperty> maskedPropertyDefinitions)
+        private MaskedCollection[] createEmptyMaskedCollection(IEnumerable<MaskedProperty> maskedPropertyDefinitions)
         {
-            return new IMaskedCollection[]{
+            return new MaskedCollection[]{
                 new MaskedCollection("main",  maskedPropertyDefinitions)
             };
         }

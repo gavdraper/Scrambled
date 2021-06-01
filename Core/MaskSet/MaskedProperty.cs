@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Scramblers.Core.MaskSet
 {
-    public class MaskedProperty : IMaskedProperty
+    public class MaskedProperty
     {
         public string PropertyName { get; set; }
         public string MaskType { get; set; }
