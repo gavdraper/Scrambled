@@ -1,18 +1,24 @@
 using Scrambled.Core.Persistance;
 using Scrambler.Core.Scramblers;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Scramblers.Core.MaskSet
 {
     public class MaskSetRunner : IMaskSetRunner
     {
-        private readonly IMaskSet maskSet;
+        private readonly MaskSet maskSet;
         private readonly IMaskPersistor maskSetPersistor;
+        private readonly IEnumerable<IScramblerFactory> scramblerFactories;
 
-        public MaskSetRunner(IMaskSet maskSet, IMaskPersistor maskSetPersistor)
+        public MaskSetRunner(
+            MaskSet maskSet,
+            IMaskPersistor maskSetPersistor,
+            IEnumerable<IScramblerFactory> scramblerFactories)
         {
             this.maskSet = maskSet;
             this.maskSetPersistor = maskSetPersistor;
+            this.scramblerFactories = scramblerFactories;
         }
 
         public void Run()
@@ -23,7 +29,7 @@ namespace Scramblers.Core.MaskSet
             }
         }
 
-        private void maskCollection(IMaskedCollection collection)
+        private void maskCollection(MaskedCollection collection)
         {
             foreach (var p in collection.MaskedProperties)
             {
@@ -31,10 +37,25 @@ namespace Scramblers.Core.MaskSet
             }
         }
 
-        private void scrambleProperty(IMaskedProperty maskedProperty)
+        private void scrambleProperty(MaskedProperty maskedProperty)
         {
-            //TODO Switch MaskType To Enum
-            //Switch Creation Out TO Factory   
+            /* TODO : Switch To Factory For Creation 
+                   Something like below should work....
+
+               foreach (var s in scramblers)
+               {
+                   if (s.HandlesType(maskedProperty.MaskType))
+                   {
+                       var scrambler = s.CreateScrambler(maskedProperty.Params);
+                       //We could probably also have a type specific runner to generalise the below
+                       var value = scrambler.Scramble((string)maskSetPersistor.GetProperty(maskedProperty.PropertyName));
+                       maskSetPersistor.SetProperty(maskedProperty.PropertyName, value);
+                   }
+               }
+               */
+
+
+            //TODO : Remove in Favor Of The Above
             if (maskedProperty.MaskType == "StringDictionary")
             {
                 var scrambler = new StringDictionaryScrambler(new[] { "Hello", "World" });
