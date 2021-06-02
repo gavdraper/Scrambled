@@ -24,9 +24,9 @@ namespace Core.Tests
             const int minValue = 0;
             const int maxValue = 1;
             var scrambler = new NumberScrambler(minValue, maxValue);
-            currentValue = scrambler.Scramble(currentValue);
+            currentValue = (int)scrambler.Scramble(currentValue);
             Assert.Equal(0, currentValue);
-            currentValue = scrambler.Scramble(currentValue);
+            currentValue = (int)scrambler.Scramble(currentValue);
             Assert.Equal(1, currentValue);
         }
     }

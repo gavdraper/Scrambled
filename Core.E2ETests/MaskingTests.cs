@@ -28,7 +28,11 @@ namespace Core.E2ETests
 
         private IEnumerable<IScramblerFactory> getScramblerFactories()
         {
-            return new List<IScramblerFactory>();
+            return new List<IScramblerFactory>()
+            {
+                new NumberScramberFactory(),
+                new StringDictionaryScramberFactory()
+            };
         }
 
         private MaskSet createSmallMaskSet()
@@ -53,10 +57,16 @@ namespace Core.E2ETests
                 new MaskedProperty(){
                     PropertyName = "FieldOne",
                     MaskType = "StringDictionary",
+                    Params = new Dictionary<string,object>{
+                        {"Dictionary",new string[]{"Hello","World"}},
+                    }
                 },
                 new MaskedProperty(){
                     PropertyName = "FieldTwo",
-                    MaskType = "StringDictionary"
+                    MaskType = "StringDictionary",
+                    Params = new Dictionary<string,object>{
+                        {"Dictionary",new string[]{"Hello","World"}},
+                    }
                 },
                 new MaskedProperty(){
                     PropertyName = "FieldThree",

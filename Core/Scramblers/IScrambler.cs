@@ -1,7 +1,9 @@
+using System;
+
 namespace Scrambler.Core.Scramblers
 {
-    public interface IScrambler<T>
+    public interface IScrambler
     {
-        T Scramble(T value);
+        Object Scramble(Object value);
     }
 }

@@ -25,9 +25,9 @@ namespace Core.Tests
             DateTime minValue = DateTime.ParseExact("20210101", "yyyyMMdd", CultureInfo.InvariantCulture);
             DateTime maxValue = DateTime.ParseExact("20210102", "yyyyMMdd", CultureInfo.InvariantCulture);
             var scrambler = new DateScrambler(minValue, maxValue);
-            currentValue = scrambler.Scramble(currentValue);
+            currentValue = (DateTime)scrambler.Scramble(currentValue);
             Assert.Equal(maxValue, currentValue);
-            currentValue = scrambler.Scramble(currentValue);
+            currentValue = (DateTime)scrambler.Scramble(currentValue);
             Assert.Equal(minValue, currentValue);
         }
     }

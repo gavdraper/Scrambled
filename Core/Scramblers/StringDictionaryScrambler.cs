@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Scrambler.Core.Scramblers
 {
-    public class StringDictionaryScrambler : IScrambler<string>
+    public class StringDictionaryScrambler : IScrambler
     {
         private readonly string[] words;
 
@@ -11,11 +11,11 @@ namespace Scrambler.Core.Scramblers
         {
             this.words = words;
         }
-        public string Scramble(string value)
+        public object Scramble(object value)
         {
             var rand = new System.Random();
             int index = rand.Next(0, words.Count() - 2);
-            return words.Where(i => i != value).ElementAt(index);
+            return words.Where(i => i != value.ToString()).ElementAt(index);
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Linq;
 namespace Scrambler.Core.Scramblers
 {
 
-    public class NumberScrambler : IScrambler<int>
+    public class NumberScrambler : IScrambler
     {
         private IEnumerable<int> range;
 
@@ -13,11 +13,12 @@ namespace Scrambler.Core.Scramblers
         {
             range = Enumerable.Range(minValue, maxValue + 1);
         }
-        public int Scramble(int value)
+        public object Scramble(object value)
         {
+            var number = (int)value;
             var rand = new System.Random();
             int index = rand.Next(0, range.Count() - 2);
-            return range.Where(x => x != value).ElementAt(index);
+            return range.Where(x => x != number).ElementAt(index);
         }
     }
 }

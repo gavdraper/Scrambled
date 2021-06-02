@@ -5,7 +5,7 @@ using System.Linq;
 namespace Scrambler.Core.Scramblers
 {
 
-    public class DateScrambler : IScrambler<DateTime>
+    public class DateScrambler : IScrambler
     {
         private int totalDays;
         private IEnumerable<DateTime> dateRange;
@@ -17,11 +17,12 @@ namespace Scrambler.Core.Scramblers
                 Enumerable.Range(0, totalDays + 1)
                 .Select(i => minValue.AddDays(i));
         }
-        public DateTime Scramble(DateTime value)
+        public Object Scramble(Object value)
         {
+            var date = (DateTime)value;
             var rand = new System.Random();
             int index = rand.Next(0, totalDays);
-            return dateRange.Where(x => x.Date != value.Date).ElementAt(index);
+            return dateRange.Where(x => x.Date != date.Date).ElementAt(index);
         }
     }
 }

@@ -21,9 +21,9 @@ namespace Core.Tests
             var words = new string[] { "Hello", "World" };
             var scrambler = new StringDictionaryScrambler(words);
             var currentValue = "Hello";
-            currentValue = scrambler.Scramble(currentValue);
+            currentValue = (string)scrambler.Scramble(currentValue);
             Assert.Equal("World", currentValue);
-            currentValue = scrambler.Scramble(currentValue);
+            currentValue = (string)scrambler.Scramble(currentValue);
             Assert.Equal("Hello", currentValue);
         }
     }

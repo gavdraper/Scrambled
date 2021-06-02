@@ -39,38 +39,15 @@ namespace Scramblers.Core.MaskSet
 
         private void scrambleProperty(MaskedProperty maskedProperty)
         {
-            /* TODO : Switch To Factory For Creation 
-                   Something like below should work....
-
-               foreach (var s in scramblers)
-               {
-                   if (s.HandlesType(maskedProperty.MaskType))
-                   {
-                       var scrambler = s.CreateScrambler(maskedProperty.Params);
-                       //We could probably also have a type specific runner to generalise the below
-                       var value = scrambler.Scramble((string)maskSetPersistor.GetProperty(maskedProperty.PropertyName));
-                       maskSetPersistor.SetProperty(maskedProperty.PropertyName, value);
-                   }
-               }
-               */
-
-
-            //TODO : Remove in Favor Of The Above
-            if (maskedProperty.MaskType == "StringDictionary")
+            foreach (var s in scramblerFactories)
             {
-                var scrambler = new StringDictionaryScrambler(new[] { "Hello", "World" });
-                var pValue = (string)maskSetPersistor.GetProperty(maskedProperty.PropertyName);
-                pValue = scrambler.Scramble(pValue);
-                maskSetPersistor.SetProperty(maskedProperty.PropertyName, pValue);
-            }
-            else if (maskedProperty.MaskType == "Number")
-            {
-                var scrambler = new NumberScrambler(
-                    (int)maskedProperty.Params["MinValue"],
-                    (int)maskedProperty.Params["MaxValue"]);
-                var value = (int)maskSetPersistor.GetProperty(maskedProperty.PropertyName);
-                value = scrambler.Scramble(value);
-                maskSetPersistor.SetProperty(maskedProperty.PropertyName, value);
+                if (s.HandlesType(maskedProperty.MaskType))
+                {
+                    var scrambler = s.Create(maskedProperty.Params);
+                    //We could probably also have a type specific runner to generalise the below
+                    var value = scrambler.Scramble(maskSetPersistor.GetProperty(maskedProperty.PropertyName));
+                    maskSetPersistor.SetProperty(maskedProperty.PropertyName, value);
+                }
             }
         }
     }
