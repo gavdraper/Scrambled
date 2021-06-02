@@ -44,7 +44,6 @@ namespace Scramblers.Core.MaskSet
                 if (s.HandlesType(maskedProperty.MaskType))
                 {
                     var scrambler = s.Create(maskedProperty.Params);
-                    //We could probably also have a type specific runner to generalise the below
                     var value = scrambler.Scramble(maskSetPersistor.GetProperty(maskedProperty.PropertyName));
                     maskSetPersistor.SetProperty(maskedProperty.PropertyName, value);
                 }

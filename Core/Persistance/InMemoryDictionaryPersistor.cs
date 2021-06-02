@@ -2,7 +2,6 @@ using System.Collections.Generic;
 
 namespace Scrambled.Core.Persistance
 {
-    //Todo this needs handle types other than string
     public class InMemoryDictionaryPersistor : IMaskPersistor
     {
         private readonly Dictionary<string, object> data;
