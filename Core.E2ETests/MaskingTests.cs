@@ -4,6 +4,7 @@ using Xunit;
 using Scrambler.Core.Scramblers;
 using Scramblers.Core.MaskSet;
 using Scrambled.Core.Persistance;
+using Scrambled.Persistance.Providers;
 
 namespace Core.E2ETests
 {

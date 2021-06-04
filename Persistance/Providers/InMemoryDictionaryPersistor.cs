@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using Scrambled.Core.Persistance;
 
-namespace Scrambled.Core.Persistance
+namespace Scrambled.Persistance.Providers
 {
     public class InMemoryDictionaryPersistor : IMaskPersistor
     {
