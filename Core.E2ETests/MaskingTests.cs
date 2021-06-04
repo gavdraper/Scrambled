@@ -29,7 +29,7 @@ namespace Core.E2ETests
 
         private IEnumerable<IScramblerFactory> getScramblerFactories()
         {
-            return new List<IScramblerFactory>()
+            return new IScramblerFactory[]
             {
                 new NumberScramberFactory(),
                 new StringDictionaryScramberFactory()
