@@ -13,13 +13,8 @@ namespace Core.E2ETests
         public void CanMaskDataBasedOnMaskSet()
         {
             var data = createSmallDataSet();
-            /*  
-                In real world maskSet will be loaded from JSON config files,
-                created from a GUI 
-            */
             var maskSet = createSmallMaskSet();
-            IMaskPersistor maskPersister = new InMemoryDictionaryPersistor(data);
-            IMaskSetRunner maskSetRunner = new MaskSetRunner(maskSet, maskPersister, getScramblerFactories());
+            IMaskSetRunner maskSetRunner = new MaskSetRunner(maskSet, getScramblerFactories());
             maskSetRunner.Run();
             Assert.Equal("World", data["FieldOne"]);
             Assert.Equal("Hello", data["FieldTwo"]);
@@ -39,7 +34,7 @@ namespace Core.E2ETests
         {
             var maskedPropertyDefinitions = createTwoPropertyMasks();
             var maskedCollections = createEmptyMaskedCollection(maskedPropertyDefinitions);
-            return new MaskSet("local:\\Dictionary", maskedCollections);
+            return new MaskSet("InMemoryDictionary", "", maskedCollections);
         }
 
         private Dictionary<string, object> createSmallDataSet()
