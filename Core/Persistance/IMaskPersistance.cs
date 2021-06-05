@@ -4,5 +4,6 @@ namespace Scrambled.Core.Persistance
     {
         object GetProperty(string propertyName);
         void SetProperty(string propertyName, object value);
+        bool HandlesType(string type);
     }
 }

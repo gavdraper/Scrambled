@@ -3,28 +3,28 @@ using Scrambled.Core.Persistance;
 
 namespace Scrambled.Persistance.Providers
 {
-    public class InMemoryDictionaryPersistor : IMaskPersistor
-    {
-        private readonly Dictionary<string, object> data;
+    // public class InMemoryDictionaryPersistor : IMaskPersistor
+    // {
+    //     private readonly Dictionary<string, object> data;
 
-        public InMemoryDictionaryPersistor(Dictionary<string, object> data)
-        {
-            this.data = data;
-        }
+    //     public InMemoryDictionaryPersistor(Dictionary<string, object> data)
+    //     {
+    //         this.data = data;
+    //     }
 
-        public object GetProperty(string propertyName)
-        {
-            return data[propertyName];
-        }
+    //     public object GetProperty(string propertyName)
+    //     {
+    //         return data[propertyName];
+    //     }
 
-        public Dictionary<string, object> GetProperties()
-        {
-            return data;
-        }
+    //     public Dictionary<string, object> GetProperties()
+    //     {
+    //         return data;
+    //     }
 
-        public void SetProperty(string propertyName, object value)
-        {
-            data[propertyName] = value.ToString();
-        }
-    }
+    //     public void SetProperty(string propertyName, object value)
+    //     {
+    //         data[propertyName] = value.ToString();
+    //     }
+    // }
 }

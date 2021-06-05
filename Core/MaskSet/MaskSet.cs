@@ -10,14 +10,15 @@ namespace Scramblers.Core.MaskSet
         public string ConnectionString { get; }
 
         private IMaskPersistor maskPersistor = null;
+        private readonly MaskPersistanceFactory factory;
+
         public IMaskPersistor MaskPersistance
         {
             get
             {
                 if (maskPersistor == null)
                 {
-                    IMaskPersistanceFactory creator = new MaskPersistanceFactory();
-                    maskPersistor = creator.Create(MaskSetType);
+                    maskPersistor = factory.Create(MaskSetType);
                 }
                 return maskPersistor;
             }
@@ -26,10 +27,12 @@ namespace Scramblers.Core.MaskSet
         public string PersistanceType { get; set; }
 
         public MaskSet(
+            MaskPersistanceFactory factory,
             string maskSetType,
             string connectionString,
             IEnumerable<MaskedCollection> collections)
         {
+            this.factory = factory;
             MaskSetType = maskSetType;
             ConnectionString = connectionString;
             MaskedCollections = collections;

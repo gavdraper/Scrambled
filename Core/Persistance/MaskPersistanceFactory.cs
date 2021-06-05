@@ -8,11 +8,19 @@ namespace Scrambled.Core.Persistance
 
     public class MaskPersistanceFactory : IMaskPersistanceFactory
     {
+        IMaskPersistor[] persistors;
+        public MaskPersistanceFactory(IMaskPersistor[] persistors)
+        {
+            this.persistors = persistors;
+        }
         public IMaskPersistor Create(string type)
         {
-            if (type == "InMemoryDictionary")
+            foreach (var p in persistors)
             {
-                return new InMemoryDictionaryPersistor(null);
+                if (p.HandlesType(type))
+                {
+                    return p;
+                }
             }
             return null;
         }
