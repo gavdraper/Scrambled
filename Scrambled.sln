@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Tests", "Core.Tests\Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.E2ETests", "Core.E2ETests\Core.E2ETests.csproj", "{69086898-7681-433C-86C5-DF1395E905D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desktop", "desktop\Desktop.csproj", "{C454DB9C-0D95-4B1A-BCF7-F263A1A827FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desktop", "Desktop\Desktop.csproj", "{C454DB9C-0D95-4B1A-BCF7-F263A1A827FD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desktop.Tests", "Desktop.Tests\Desktop.Tests.csproj", "{87E7912A-53E5-46BC-BE98-2B5E0AE2FCD1}"
 EndProject
