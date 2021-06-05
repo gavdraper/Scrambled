@@ -8,16 +8,13 @@ namespace Scramblers.Core.MaskSet
     public class MaskSetRunner : IMaskSetRunner
     {
         private readonly MaskSet maskSet;
-        private readonly IMaskPersistor maskSetPersistor;
         private readonly IEnumerable<IScramblerFactory> scramblerFactories;
 
         public MaskSetRunner(
             MaskSet maskSet,
-            IMaskPersistor maskSetPersistor,
             IEnumerable<IScramblerFactory> scramblerFactories)
         {
             this.maskSet = maskSet;
-            this.maskSetPersistor = maskSetPersistor;
             this.scramblerFactories = scramblerFactories;
         }
 
@@ -44,8 +41,8 @@ namespace Scramblers.Core.MaskSet
                 if (s.HandlesType(maskedProperty.MaskType))
                 {
                     var scrambler = s.Create(maskedProperty.Params);
-                    var value = scrambler.Scramble(maskSetPersistor.GetProperty(maskedProperty.PropertyName));
-                    maskSetPersistor.SetProperty(maskedProperty.PropertyName, value);
+                    var value = scrambler.Scramble(maskSet.MaskPersistance.GetProperty(maskedProperty.PropertyName));
+                    maskSet.MaskPersistance.SetProperty(maskedProperty.PropertyName, value);
                 }
             }
         }
