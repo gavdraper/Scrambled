@@ -14,13 +14,31 @@ namespace Core.E2ETests
         [Fact]
         public void CanMaskDataBasedOnMaskSet()
         {
-            var data = createSmallDataSet();
-            var maskSet = createSmallMaskSet();
+            //Arrange
+            var source = new Dictionary<string, object>(){
+                {"FieldOne","Hello"},
+                {"FieldTwo","World"},
+                {"FieldThree",1},
+            };
+            var mockPersistor = new Mock<IMaskPersistor>();
+            mockPersistor.Setup(p => p.HandlesType(It.IsAny<string>())).Returns(true);
+            mockPersistor.Setup(p => p.GetProperty(It.IsAny<string>())).Returns((string x) => source[x]);
+            mockPersistor.Setup(p => p.SetProperty(It.IsAny<string>(), It.IsAny<object>()))
+            .Callback((string key, object value) =>
+            {
+                source[key] = value;
+            });
+
+            var maskSet = createSmallMaskSet(mockPersistor.Object);
             IMaskSetRunner maskSetRunner = new MaskSetRunner(maskSet, getScramblerFactories());
+
+            //Act
             maskSetRunner.Run();
-            Assert.Equal("World", data["FieldOne"]);
-            Assert.Equal("Hello", data["FieldTwo"]);
-            Assert.NotEqual(1, data["FieldThree"]);
+
+            //Assert
+            Assert.Equal("World", source["FieldOne"]);
+            Assert.Equal("Hello", source["FieldTwo"]);
+            Assert.NotEqual(1, source["FieldThree"]);
         }
 
         private IEnumerable<IScramblerFactory> getScramblerFactories()
@@ -32,20 +50,12 @@ namespace Core.E2ETests
             };
         }
 
-        private MaskSet createSmallMaskSet()
+        private MaskSet createSmallMaskSet(IMaskPersistor persistor)
         {
             var maskedPropertyDefinitions = createTwoPropertyMasks();
             var maskedCollections = createEmptyMaskedCollection(maskedPropertyDefinitions);
-
-            //Todo Setup SetProperty Method 
-            var mockPersistor = new Mock<IMaskPersistor>();
-            mockPersistor.Setup(p => p.HandlesType(It.IsAny<string>())).Returns(true);
-            mockPersistor.Setup(p => p.GetProperty("FieldOne")).Returns("Hello");
-            mockPersistor.Setup(p => p.GetProperty("FieldTwo")).Returns("World");
-            mockPersistor.Setup(p => p.GetProperty("FieldThree")).Returns(1);
-
             var persistors = new IMaskPersistor[] {
-               mockPersistor.Object
+               persistor
              };
             return new MaskSet(new MaskPersistanceFactory(persistors), "TestSource", "TestConnection", maskedCollections);
         }
