@@ -4,6 +4,7 @@ using Xunit;
 using Scrambler.Core.Scramblers;
 using Scramblers.Core.MaskSet;
 using Scrambled.Core.Persistance;
+using Scrambled.Persistance.Providers;
 
 namespace Core.E2ETests
 {
@@ -23,7 +24,7 @@ namespace Core.E2ETests
 
         private IEnumerable<IScramblerFactory> getScramblerFactories()
         {
-            return new List<IScramblerFactory>()
+            return new IScramblerFactory[]
             {
                 new NumberScramberFactory(),
                 new StringDictionaryScramberFactory()
